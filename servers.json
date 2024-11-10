@@ -1,10 +1,10 @@
 {
   "Servers": {
     "1": {
-      "Name": "dev-db",
+      "Name": "dev_cmr",
       "Group": "Servers",
       "Host": "db",
-      "Port": 5432,
+      "Port": 5434,
       "Username": "postgres",
       "Password": "postgres",
       "SSLMode": "prefer",
