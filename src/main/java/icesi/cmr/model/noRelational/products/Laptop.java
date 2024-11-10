@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = true)
+//Use the @TypeAlias annotation to specify the alias of the document in the database
 @TypeAlias("laptop")
 public class Laptop extends Product {
 

@@ -2,8 +2,7 @@ package icesi.cmr.controllers;
 
 import icesi.cmr.dto.ProductRequestDTO;
 import icesi.cmr.dto.products.ProductDTO;
-import icesi.cmr.exceptions.InvalidProductType;
-import icesi.cmr.exceptions.ProductTypeRequiredException;
+import icesi.cmr.exceptions.*;
 import icesi.cmr.services.impl.ProductServiceImpl;
 import icesi.cmr.services.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,16 @@ public class ProductController {
     private ProductService productServiceImpl;
 
     @PostMapping()
-    public ResponseEntity<?> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+    public ResponseEntity<?> createProduct(@RequestBody Map<String, Object> productData) {
 
         try {
-            ProductDTO productDTO = productServiceImpl.parseProductDTO(productRequestDTO.getProductData());
+            ProductDTO productDTO = productServiceImpl.parseProductDTO(productData);
 
-            productServiceImpl.createProduct(productDTO, productRequestDTO.getStock());
+            productServiceImpl.createProduct(productDTO);
 
             return ResponseEntity.ok().body("Product created successfully");
 
-        }catch (InvalidProductType | ProductTypeRequiredException e){
+        }catch (InvalidPriceException | InvalidProductType | ProductTypeRequiredException | NotValidNegativeStock e ){
             return ResponseEntity.badRequest().body(e.getMessage());
 
         }catch (HttpClientErrorException.Unauthorized e){
@@ -44,7 +43,69 @@ public class ProductController {
 
     }
 
+    /**
+     * This method is used to delete a product from the database
+     * @param id the id of the product that is stored in the no relational database.
+     * @return a response entity with a message indicating if the product was deleted successfully or not
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
+        try {
+            productServiceImpl.deleteProduct(id);
+            return ResponseEntity.ok().body("Product deleted successfully");
+        } catch (ProductNotFound e){
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProduct(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok().body(productServiceImpl.getProduct(id));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getProducts(@RequestParam(required = false) String category) {
+        try {
+
+            if (category == null) {
+                return ResponseEntity.ok().body(productServiceImpl.getProducts());
+            }else {
+                return ResponseEntity.ok().body(productServiceImpl.getProductByCategory(category));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateProductFields(@PathVariable String id, @RequestBody Map<String, Object> fieldsToUpdate) {
+        try {
+            productServiceImpl.updateProductFields(id, fieldsToUpdate);
+            return ResponseEntity.ok().body("Product updated successfully");
+        } catch (ProductNotFound e){
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }catch (InvalidPriceException | InvalidProductCategoryException  | NotValidNegativeStock e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 
 }

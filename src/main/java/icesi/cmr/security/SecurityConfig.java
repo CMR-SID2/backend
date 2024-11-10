@@ -52,7 +52,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("register", "/api/auth/login")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")  // Solo el POST de /api/products requiere rol ADMIN
+                        .requestMatchers(HttpMethod.POST, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/products", "api/categories").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

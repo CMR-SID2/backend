@@ -146,7 +146,8 @@ public class DataInitializer {
 
 
         EquipmentCategory equipmentCategory = EquipmentCategory.builder()
-                .name("Category 1")
+                .name("Computacion")
+                .description("Description category 1")
                 .build();
 
         Equipment equipment = Equipment.builder()

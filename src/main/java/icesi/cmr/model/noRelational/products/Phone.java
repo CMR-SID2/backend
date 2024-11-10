@@ -2,6 +2,7 @@ package icesi.cmr.model.noRelational.products;
 
 
 import lombok.*;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "products")
+@TypeAlias("phone")
 public class Phone extends Product {
 
     private String screenSize;

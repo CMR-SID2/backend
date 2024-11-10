@@ -16,14 +16,15 @@ import java.util.Map;
 public class Product {
 
     @Id
+    //Use the @Indexed annotation to specify that the field is indexed to improve query performance
     @Indexed(unique = true)
     private String id;
     private String name;
     private String brand;
     private String model;
     private String description;
-    private Double price;
-    private Boolean available;
+    private Float price;
+    private Integer stock;
     private Integer warrantyPeriod; // in months
     private Long releaseDate;
     private Map<String, Object> specifications;

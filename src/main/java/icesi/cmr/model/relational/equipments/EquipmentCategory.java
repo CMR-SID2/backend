@@ -25,4 +25,6 @@ public class EquipmentCategory implements Serializable {
     @Column(unique = true, nullable = false)
     private String name;
 
+    private String description;
+
 }
