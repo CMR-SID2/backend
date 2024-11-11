@@ -36,6 +36,4 @@ public class DeliveryCertificate implements Serializable {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
-
-
 }
