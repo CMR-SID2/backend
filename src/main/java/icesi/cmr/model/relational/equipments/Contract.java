@@ -31,13 +31,15 @@ public class Contract implements Serializable {
     private Long endDate;
 
     @Column(name = "monthly_cost", nullable = false)
-    private float monthlyCost;
+    private Float monthlyCost;
 
     @Column(name = "contract_number", unique = true, nullable = false)
     private String contractNumber;
 
-    @Column(nullable = false)
-    private boolean accepted;
+    private Boolean accepted = false;
+
+    private Boolean isClosed = false;
+
 
     @ManyToOne
     @JoinColumn(name = "department_id")

@@ -9,7 +9,7 @@ public interface CategoryService {
 
     void saveCategory(CategoryDTO categoryDTO);
 
-    void deleteCategory(String name);
+    void deleteCategory(Integer id);
 
     void updateCategory(CategoryDTO categoryDTO);
 

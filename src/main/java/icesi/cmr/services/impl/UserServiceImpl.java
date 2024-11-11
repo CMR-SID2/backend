@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserDTO user) {
 
-        System.out.println("User on user service: " + user);
+        System.out.println("User on user service: " + user + "\n");
 
         if (user.getRolesNames().contains("ROLE_ADMIN")) {
 
@@ -181,6 +181,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("Roles on user service: " + userToSave.getRoles());
 
 
+        System.out.println("Finished for user: " + userToSave.getUsername());
         return userRepository.findById(userToSave.getId()).orElseThrow(() -> new EntityNotFound("User not found"));
 
     }

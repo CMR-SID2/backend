@@ -115,12 +115,20 @@ public class DataInitializer {
         //--------------User creation--------------
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setUsername("johndoe");
-        userDTO.setPassword("securepassword123");
-        userDTO.setEmail("johndoe@example.com");
+        userDTO.setUsername("worker");
+        userDTO.setPassword("worker");
+        userDTO.setEmail("worker@example.com");
         userDTO.setCompanyId(company1.getId());
         userDTO.setDepartmentId(department.getId());
         userDTO.setRolesNames(List.of("WORKER"));
+
+        UserDTO businessManagerDTO = new UserDTO();
+        businessManagerDTO.setUsername("business");
+        businessManagerDTO.setPassword("business");
+        businessManagerDTO.setEmail("business@example.com");
+        businessManagerDTO.setCompanyId(company1.getId());
+        businessManagerDTO.setDepartmentId(department.getId());
+        businessManagerDTO.setRolesNames(List.of("BUSINESS_MANAGER"));
 
 
         Admin admin1 = Admin.builder()
@@ -134,6 +142,7 @@ public class DataInitializer {
         admin1.setPassword(encoder.encode(admin1.getPassword()));
 
         userService.save(userDTO);
+        userService.save(businessManagerDTO);
         userRepository.save(admin1);
 
 
@@ -180,7 +189,7 @@ public class DataInitializer {
                 .department(department)
                 .startDate(System.currentTimeMillis())
                 .endDate(System.currentTimeMillis() + 1000000)
-                .monthlyCost(1000)
+                .monthlyCost(1000f)
                 .contractNumber(UUID.randomUUID().toString())
                 .build();
 

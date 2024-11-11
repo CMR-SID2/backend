@@ -49,14 +49,17 @@ public class SecurityConfig {
 
         http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("register", "/api/auth/login")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users", "/api/companies", "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**", "/api/categories/**").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/products", "/api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**", "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products", "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/products", "/api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/companies", "/api/departments").hasRole("BUSINESS_MANAGER")
-                        //.requestMatchers(HttpMethod.GET, "/api/companies", "/api/departments").hasRole("BUSINESS_MANAGER")
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/companies", "/api/departments/**").hasRole("BUSINESS_MANAGER")
+
+
                         .anyRequest()
                         .authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

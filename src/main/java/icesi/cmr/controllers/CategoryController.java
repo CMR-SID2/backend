@@ -2,6 +2,7 @@ package icesi.cmr.controllers;
 
 import icesi.cmr.dto.CategoryDTO;
 import icesi.cmr.exceptions.AlreadyExistEntity;
+import icesi.cmr.exceptions.EntityNotFound;
 import icesi.cmr.services.interfaces.CategoryService;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,17 @@ public class CategoryController {
 
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteCategory(@PathVariable String name) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
         try {
-            categoryService.deleteCategory(name);
+            categoryService.deleteCategory(id);
             return ResponseEntity.ok().body("Category deleted successfully");
-        } catch (Exception e){
+        } catch (EntityNotFound e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }

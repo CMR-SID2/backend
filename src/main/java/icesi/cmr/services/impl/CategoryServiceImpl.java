@@ -2,6 +2,7 @@ package icesi.cmr.services.impl;
 
 import icesi.cmr.dto.CategoryDTO;
 import icesi.cmr.exceptions.AlreadyExistEntity;
+import icesi.cmr.exceptions.EntityNotFound;
 import icesi.cmr.mappers.CategoryMapper;
 import icesi.cmr.model.relational.equipments.EquipmentCategory;
 import icesi.cmr.repositories.equipments.EquipmentCategoryRepository;
@@ -38,12 +39,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(String name) {
+    public void deleteCategory(Integer id) {
 
 
-        EquipmentCategory category = equipmentCategoryRepository.findByName(name);
+        EquipmentCategory category = equipmentCategoryRepository.findById(id).orElse(null);
 
-        equipmentCategoryRepository.delete(category);
+        if (category == null) {
+            throw new EntityNotFound("Category not found");
+        }
+        equipmentCategoryRepository.deleteById(id);
 
     }
 
