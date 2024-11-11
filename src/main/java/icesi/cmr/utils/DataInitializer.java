@@ -66,17 +66,17 @@ public class DataInitializer {
 
 
         Role platformAdmin = Role.builder()
-                .name("ROLE_ADMIN")
+                .name("ADMIN")
                 .description("Administrator of the platform")
                 .build();
 
         Role businessManager = Role.builder()
-                .name("ROLE_BUSINESS_MANAGER")
+                .name("BUSINESS_MANAGER")
                 .description("Manager of a business")
                 .build();
 
         Role worker = Role.builder()
-                .name("ROLE_WORKER")
+                .name("WORKER")
                 .description("Worker of a business")
                 .build();
 
@@ -120,7 +120,7 @@ public class DataInitializer {
         userDTO.setEmail("johndoe@example.com");
         userDTO.setCompanyId(company1.getId());
         userDTO.setDepartmentId(department.getId());
-        userDTO.setRolesNames(List.of("ROLE_WORKER"));
+        userDTO.setRolesNames(List.of("WORKER"));
 
 
         Admin admin1 = Admin.builder()

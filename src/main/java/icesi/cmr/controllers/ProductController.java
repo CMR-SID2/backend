@@ -31,9 +31,13 @@ public class ProductController {
             return ResponseEntity.ok().body("Product created successfully");
 
         }catch (InvalidPriceException | InvalidProductType | ProductTypeRequiredException | NotValidNegativeStock e ){
+            e.printStackTrace();
+
             return ResponseEntity.badRequest().body(e.getMessage());
 
         }catch (HttpClientErrorException.Unauthorized e){
+            e.printStackTrace();
+
             return ResponseEntity.status(401).body(e.getMessage());
         }
         catch (Exception e){

@@ -21,9 +21,8 @@ import java.security.Security;
 
 @Configuration
 @EnableWebSecurity
-
+@EnableMethodSecurity
 public class SecurityConfig {
-
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -52,13 +51,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("register", "/api/auth/login")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/products", "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/products", "api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/products", "api/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/api/products", "api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products", "/api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/products", "/api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/companies", "/api/departments").hasRole("BUSINESS_MANAGER")
+                        //.requestMatchers(HttpMethod.GET, "/api/companies", "/api/departments").hasRole("BUSINESS_MANAGER")
                         .anyRequest()
                         .authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

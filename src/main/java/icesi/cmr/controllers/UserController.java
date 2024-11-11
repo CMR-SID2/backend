@@ -11,6 +11,7 @@ import icesi.cmr.model.relational.users.User;
 import icesi.cmr.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class UserController {
             return ResponseEntity.ok(UserMapper.INSTANCE.userToUserDTO((Client) user));
 
         }catch (NotValidUserRoleCreation     | EntityNotFound e) {
+            e.printStackTrace();
 
             return ResponseEntity.notFound().build();
         }catch (Exception e) {
@@ -56,9 +58,11 @@ public class UserController {
             return ResponseEntity.ok(userDTO);
 
         }catch (  EntityNotFound e) {
+            e.printStackTrace();
 
             return ResponseEntity.notFound().build();
         }catch (NotAllowGetAdminInfoException e) {
+            e.printStackTrace();
 
             return ResponseEntity.status(403).build();
         }
@@ -72,6 +76,7 @@ public class UserController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDTO>> getUsers() {
 
         try {
@@ -81,6 +86,7 @@ public class UserController {
             return ResponseEntity.ok(users);
 
         }catch (EntityNotFound e) {
+            e.printStackTrace();
 
             return ResponseEntity.notFound().build();
         }catch (Exception e) {

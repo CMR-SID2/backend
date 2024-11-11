@@ -34,9 +34,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
@@ -61,25 +58,22 @@ public class AuthController {
 
                 userResponse = UserMapper.INSTANCE.userToUserDTO((Admin) user);
 
-            }else {
+            } else {
 
                 userResponse = UserMapper.INSTANCE.userToUserDTO((Client) user);
 
             }
 
-
-
             AuthResponseDTO authResponseDTO = AuthResponseDTO.builder().userDTO(userResponse).token(jwtToken).build();
 
-
-
-            return new ResponseEntity<>(authResponseDTO,  HttpStatus.OK);
+            return new ResponseEntity<>(authResponseDTO, HttpStatus.OK);
 
         } catch (AuthenticationException e) {
             e.printStackTrace();
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
