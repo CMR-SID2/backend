@@ -141,6 +141,20 @@ public class DataInitializer {
         departmentRepository.save(department);
         companyRepository.save(company1);
 
+        //--------------User Roles creation--------------
+
+        UserRolePK userRolePK1 = UserRolePK.builder()
+                .roleId(platformAdmin.getId())
+                .userId(admin1.getId())
+                .build();
+
+        UserRole userRole1 = UserRole.builder()
+                .id(userRolePK1)
+                .user(admin1)
+                .role(platformAdmin)
+                .build();
+
+        userRoleRepository.save(userRole1);
 
         //--------------Equipment staff creation--------------
 

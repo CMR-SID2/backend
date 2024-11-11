@@ -4,6 +4,7 @@ import icesi.cmr.dto.AuthRequest;
 import icesi.cmr.dto.AuthResponseDTO;
 import icesi.cmr.dto.UserDTO;
 import icesi.cmr.mappers.UserMapper;
+import icesi.cmr.model.relational.users.Admin;
 import icesi.cmr.model.relational.users.Client;
 import icesi.cmr.model.relational.users.User;
 import icesi.cmr.security.JWT.JwtService;
@@ -38,13 +39,11 @@ public class AuthController {
 
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-
         try {
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                             authRequest.getPassword()));
-
 
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -55,10 +54,23 @@ public class AuthController {
             User user = userService.getUserByUsername(authRequest.getUsername());
 
             //Need to cast based on the user type
-            UserDTO userResponse = UserMapper.INSTANCE.userToUserDTO((Client) user);
 
-            //Wrap userDTO and jwToken on body response
+            UserDTO userResponse = null;
+
+            if (user instanceof Admin) {
+
+                userResponse = UserMapper.INSTANCE.userToUserDTO((Admin) user);
+
+            }else {
+
+                userResponse = UserMapper.INSTANCE.userToUserDTO((Client) user);
+
+            }
+
+
+
             AuthResponseDTO authResponseDTO = AuthResponseDTO.builder().userDTO(userResponse).token(jwtToken).build();
+
 
 
             return new ResponseEntity<>(authResponseDTO,  HttpStatus.OK);

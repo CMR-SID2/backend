@@ -49,6 +49,16 @@ public class CategoryController {
         }
     }
 
+    @GetMapping()
+    public ResponseEntity<?> getCategories() {
+        try {
+            return ResponseEntity.ok().body(categoryService.getCategories());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
 
 
 

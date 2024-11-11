@@ -1,6 +1,7 @@
 package icesi.cmr.mappers;
 
 import icesi.cmr.dto.UserDTO;
+import icesi.cmr.model.relational.users.Admin;
 import icesi.cmr.model.relational.users.Client;
 import icesi.cmr.model.relational.users.UserRole;
 import org.mapstruct.Mapper;
@@ -25,6 +26,8 @@ public interface UserMapper {
             @Mapping(target = "password", ignore = true),
     })
     UserDTO userToUserDTO(Client user);
+
+    UserDTO userToUserDTO(Admin user);
 
 
     Client userDTOToUser(UserDTO userDTO);

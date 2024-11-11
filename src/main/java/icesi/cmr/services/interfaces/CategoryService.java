@@ -1,6 +1,9 @@
 package icesi.cmr.services.interfaces;
 
 import icesi.cmr.dto.CategoryDTO;
+import icesi.cmr.model.relational.equipments.EquipmentCategory;
+
+import java.util.List;
 
 public interface CategoryService {
 
@@ -10,8 +13,9 @@ public interface CategoryService {
 
     void updateCategory(CategoryDTO categoryDTO);
 
-    void getCategory(String name);
+    EquipmentCategory getCategory(String name);
 
+    List<EquipmentCategory> getCategories();
 
 
 }
