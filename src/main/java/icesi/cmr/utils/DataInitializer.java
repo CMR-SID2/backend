@@ -1,5 +1,6 @@
 package icesi.cmr.utils;
 
+import icesi.cmr.dto.UserDTO;
 import icesi.cmr.model.relational.companies.Company;
 import icesi.cmr.model.relational.companies.Department;
 import icesi.cmr.model.relational.equipments.Contract;
@@ -18,6 +19,7 @@ import icesi.cmr.repositories.users.UserRepository;
 import icesi.cmr.repositories.users.UserRoleRepository;
 import icesi.cmr.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -54,6 +56,9 @@ public class DataInitializer {
 
     @Autowired
     private ContractRepository contractRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
 
     public void init() {
@@ -109,37 +114,33 @@ public class DataInitializer {
 
         //--------------User creation--------------
 
-        Client user1 = Client.builder()
-                .username("johndoe")
-                .password("securepassword123")
-                .email("johndoe@example.com")
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("johndoe");
+        userDTO.setPassword("securepassword123");
+        userDTO.setEmail("johndoe@example.com");
+        userDTO.setCompanyId(company1.getId());
+        userDTO.setDepartmentId(department.getId());
+        userDTO.setRolesNames(List.of("ROLE_WORKER"));
+
+
+        Admin admin1 = Admin.builder()
+                .username("admin")
+                .password("admin")
+                .email("admin@example.com")
+                .description("Admin in charge of the platform")
                 .createdAt(System.currentTimeMillis())
-                .company(company1)
-                .department(department)
                 .build();
 
-        userService.save(user1);
+        admin1.setPassword(encoder.encode(admin1.getPassword()));
 
-        department.setUsers(List.of(user1));
-        company1.setUsers(List.of(user1));
+        userService.save(userDTO);
+        userRepository.save(admin1);
+
+
 
         departmentRepository.save(department);
         companyRepository.save(company1);
 
-        //--------------User Roles creation--------------
-
-        UserRolePK userRolePK1 = UserRolePK.builder()
-                .roleId(platformAdmin.getId())
-                .userId(user1.getId())
-                .build();
-
-        UserRole userRole1 = UserRole.builder()
-                .id(userRolePK1)
-                .user(user1)
-                .role(platformAdmin)
-                .build();
-
-        userRoleRepository.save(userRole1);
 
         //--------------Equipment staff creation--------------
 

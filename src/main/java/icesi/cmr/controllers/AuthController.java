@@ -33,12 +33,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-
-
-
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
 
 
     @PostMapping("login")

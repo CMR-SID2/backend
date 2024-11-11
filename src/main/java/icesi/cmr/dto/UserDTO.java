@@ -16,11 +16,14 @@ public class UserDTO {
 
     private String email;
 
+    private String password;
+
     private Integer id;
 
     private List<String> rolesNames;
 
     private Integer companyId;
 
+    private Integer departmentId;
 
 }

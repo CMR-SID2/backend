@@ -1,6 +1,7 @@
 package icesi.cmr.model.relational.users;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

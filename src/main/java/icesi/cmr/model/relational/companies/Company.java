@@ -1,5 +1,6 @@
 package icesi.cmr.model.relational.companies;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import icesi.cmr.model.relational.users.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,10 +51,26 @@ public class Company implements Serializable {
     //----------------Relations----------------
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Client> users;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Department> departments;
 
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "creationDate=" + creationDate +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", industry='" + industry + '\'' +
+                ", name='" + name + '\'' +
+                ", nit='" + nit + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

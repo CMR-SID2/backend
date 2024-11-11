@@ -41,4 +41,13 @@ public class Department implements Serializable {
     private List<Contract> contracts;
 
 
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", company=" + company +
+                '}';
+    }
 }

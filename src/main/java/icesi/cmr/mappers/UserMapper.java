@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
 
@@ -20,9 +20,12 @@ public interface UserMapper {
     @Mappings({
 
             @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "roles", target = "rolesNames")
+            @Mapping(source = "roles", target = "rolesNames"),
+            @Mapping(source = "department.id", target = "departmentId"),
+            @Mapping(target = "password", ignore = true),
     })
     UserDTO userToUserDTO(Client user);
+
 
     Client userDTOToUser(UserDTO userDTO);
 
