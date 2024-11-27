@@ -30,7 +30,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
 
-    public void saveDepartment(DepartmentDTO department) {
+    public Department saveDepartment(DepartmentDTO department) {
 
 
         System.out.println("DepartmentDTO to save on service: " + department);
@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         departmentToSave.setCompany(companyRepository.findById(department.getCompanyId()).orElseThrow( () -> new EntityNotFound("Company not found on department")));
 
-        departmentRepository.save(departmentToSave);
+        return departmentRepository.save(departmentToSave);
     }
 
     @Override

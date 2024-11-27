@@ -79,7 +79,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CompanyDTO>> getAllCompanies() {
 
         try {

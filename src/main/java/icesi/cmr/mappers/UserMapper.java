@@ -27,6 +27,11 @@ public interface UserMapper {
     })
     UserDTO userToUserDTO(Client user);
 
+    @Mappings({
+
+            @Mapping(source = "roles", target = "rolesNames"),
+
+    })
     UserDTO userToUserDTO(Admin user);
 
 
