@@ -10,7 +10,7 @@ public interface DepartmentService {
 
     Department getDepartment(Integer id);
 
-    void saveDepartment(DepartmentDTO department);
+    Department saveDepartment(DepartmentDTO department);
 
     void deleteDepartment(Integer id);
 

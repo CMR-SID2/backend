@@ -3,6 +3,7 @@ package icesi.cmr.controllers;
 import icesi.cmr.dto.DepartmentDTO;
 import icesi.cmr.exceptions.EntityNotFound;
 import icesi.cmr.mappers.DepartmentMapper;
+import icesi.cmr.model.relational.companies.Department;
 import icesi.cmr.services.interfaces.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +40,12 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveDepartment(@RequestBody DepartmentDTO departmentDTO) {
+    public ResponseEntity<DepartmentDTO> saveDepartment(@RequestBody DepartmentDTO departmentDTO) {
         System.out.println("DepartmentDTO to save on service: " + departmentDTO);
         try {
-            departmentService.saveDepartment(departmentDTO);
-            return ResponseEntity.ok("Department saved");
+            Department dep =  departmentService.saveDepartment(departmentDTO);
+            DepartmentDTO depDTO = DepartmentMapper.INSTANCE.departmentToDepartmentDTO(dep);
+            return ResponseEntity.ok(depDTO);
         } catch (EntityNotFound e) {
             e.printStackTrace();
             return ResponseEntity.notFound().build();

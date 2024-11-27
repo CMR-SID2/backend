@@ -169,17 +169,30 @@ public class DataInitializer {
 
 
 
-        EquipmentCategory equipmentCategory = EquipmentCategory.builder()
+        EquipmentCategory equipmentCategory1 = EquipmentCategory.builder()
                 .name("Computacion")
-                .description("Description category 1")
+                .description("Categoria de computacion")
                 .build();
+
+        EquipmentCategory equipmentCategory2 = EquipmentCategory.builder()
+                .name("Impresion")
+                .description("Categoría de impresion")
+                .build();
+
+        EquipmentCategory equipmentCategory3 = EquipmentCategory.builder()
+                .name("Movil")
+                .description("Categoría de movil")
+                .build();
+
 
         Equipment equipment = Equipment.builder()
                 .inventaryCode("123456")
                 .stock(10)
                 .build();
 
-        equipmentCategoryRepository.save(equipmentCategory);
+        equipmentCategoryRepository.save(equipmentCategory1);
+        equipmentCategoryRepository.save(equipmentCategory2);
+        equipmentCategoryRepository.save(equipmentCategory3);
 
         equipmentRepository.save(equipment);
 

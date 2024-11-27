@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("User on user service: " + user + "\n");
 
-        if (user.getRolesNames().contains("ROLE_ADMIN")) {
+        if (user.getRolesNames().contains("ADMIN")) {
 
             throw new NotValidUserRoleCreation("Admin role is not allowed to be created");
 

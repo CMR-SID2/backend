@@ -57,9 +57,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFound("Equipment not found");
         }
 
-        System.out.println("Product to delete on product service: " + product);
-        System.out.println("Equipment to delete on product service: " + equipment);
-
         //Delete the equipment from the no relational database
         productRepository.deleteById(id);
         //Delete the product from the relational database
