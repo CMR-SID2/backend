@@ -20,6 +20,12 @@ configurations {
 	}
 }
 
+compileJava {
+    options.fork = true
+    options.forkOptions.javaHome = file("/usr/lib/jvm/java-21-openjdk")  // Ajustar el path si es necesario
+}
+
+
 repositories {
 	mavenCentral()
 }
