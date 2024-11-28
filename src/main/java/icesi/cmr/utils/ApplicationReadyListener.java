@@ -14,7 +14,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        dataInitializer.init();
+        //dataInitializer.init();
 
     }
 

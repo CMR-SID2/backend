@@ -13,12 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 //Use the @TypeAlias annotation to specify the alias of the document in the database
 @TypeAlias("laptop")
 public class Laptop extends Product {
-
     private String processor;
     private String ram;
     private String storageType;
     private String storageCapacity;
     private String graphicsCard;
     private String operatingSystem;
-
 }
