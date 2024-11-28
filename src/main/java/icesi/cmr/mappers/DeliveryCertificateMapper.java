@@ -15,7 +15,8 @@ public interface DeliveryCertificateMapper {
     @Mappings({
 
             @Mapping(target = "contractId", source ="contract.id" ),
-            @Mapping(target = "equipmentId", source ="equipment.id" )
+            @Mapping(target = "equipmentId", source ="equipment.id" ),
+            @Mapping(target = "equipmentInventaryCode", source ="equipment.inventaryCode" )
 
     })
 
