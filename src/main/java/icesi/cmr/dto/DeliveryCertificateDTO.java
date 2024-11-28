@@ -24,6 +24,8 @@ public class DeliveryCertificateDTO {
 
     private String equipmentId;
 
+    private String equipmentInventaryCode;
+
     private Integer contractId;
 
 }
