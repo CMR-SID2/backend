@@ -8,6 +8,6 @@ public class CmrApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CmrApplication.class, args);
-	}
 
+	}
 }

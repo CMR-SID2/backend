@@ -87,7 +87,6 @@ public class DataInitializer {
         //--------------Company and department Creation--------------
 
 
-
         Company company1 = Company.builder()
                 .name("Company 1")
                 .nit("123456789")
@@ -108,8 +107,6 @@ public class DataInitializer {
 
         company1.setDepartments(List.of(department));
         companyRepository.save(company1);
-
-
 
 
         //--------------User creation--------------
@@ -146,7 +143,6 @@ public class DataInitializer {
         userRepository.save(admin1);
 
 
-
         departmentRepository.save(department);
         companyRepository.save(company1);
 
@@ -166,7 +162,6 @@ public class DataInitializer {
         userRoleRepository.save(userRole1);
 
         //--------------Equipment staff creation--------------
-
 
 
         EquipmentCategory equipmentCategory1 = EquipmentCategory.builder()

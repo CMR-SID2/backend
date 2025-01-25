@@ -47,7 +47,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).cors(customizer -> customizer.configurationSource(corsConfigurationSource())) // Habilitar CORS
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.POST, "/api/users", "/api/companies","/api/departments" ,"/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users", "/api/companies","/api/departments" ,"/api/auth/login", "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**", "/api/categories/**", "/api/companies", "/api/departments").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/products", "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/products/**", "/api/categories").hasRole("ADMIN")
@@ -56,6 +58,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/companies", "/api/departments/**").hasRole("BUSINESS_MANAGER")
                         .anyRequest()
                         .authenticated()
+
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -76,7 +79,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Agrega tus dominios permitidos
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization")); // Si necesitas exponer headers específicos
